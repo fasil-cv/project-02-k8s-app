@@ -8,10 +8,8 @@ Kubernetes project application deploy E2E
 ```
 application/
 ├── Dockerfile
-├── index.php
 ├── nginx.conf
-├── supervisord.conf
-└── deployment.yaml
+└── supervisord.conf
 ```
 
 
