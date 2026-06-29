@@ -48,3 +48,30 @@ data:
     );
 ```
 
+
+
+The Role of Each File
+1. Dockerfile
+The build instructions. It starts from a lightweight Linux base, installs Nginx, PHP, and Supervisor, copies your other three files into the image, and sets the startup command.
+
+2. index.php
+The application logic and user interface. It reads the database credentials from the cluster environment, establishes the secure connection, handles the button click to insert rows, and generates the dark-themed HTML table.
+
+3. nginx.conf
+The web server configuration. It listens for incoming HTTP traffic on port 80 and ensures that any request for a .php file is correctly routed internally to the PHP processing engine.
+
+4. supervisord.conf
+The process manager. Containers are designed to run only a single primary process. Supervisor acts as that single process, allowing both Nginx and PHP-FPM to run simultaneously in the background without the container crashing.
+
+Build the Image
+Whenever you make changes to your index.php file, navigate to your /application/ directory and run this command to rebuild the image before deploying it:
+
+Bash
+docker build -t your-registry-username/application:v3 .
+
+
+
+## Tech Stack
+* **Frontend/App:** PHP (PDO), Tailwind CSS, Nginx, Supervisor
+* **Database:** MySQL 8.0 with automated ConfigMap SQL initialization
+* **Storage:** Decoupled data persistence via PersistentVolumeClaims (PVC)
