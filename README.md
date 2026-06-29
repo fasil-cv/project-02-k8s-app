@@ -18,11 +18,12 @@ project/
 │   │
 │   ├── backend/
 │   │   ├── Dockerfile
-│   │   └── app.py
+│   │   ├── app.py
+│   │   └── requirements.txt
 │
 └── k8s/
-    ├── frontend.yaml
+    ├── mysql.yaml
     ├── backend.yaml
-    ├── frontend-service.yaml
-    ├── backend-service.yaml
+    ├── frontend.yaml
+    ├── services.yaml
 ```
