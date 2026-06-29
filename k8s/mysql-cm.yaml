@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-init
+data:
+  init.sql: |
+    CREATE TABLE users (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(100)
+    );
+
+    INSERT INTO users (name) VALUES
+    ('Fasil'),
+    ('DevOps Engineer'),
+    ('Kubernetes User');
