@@ -67,7 +67,7 @@ Build the Image
 Whenever you make changes to your index.php file, navigate to your /application/ directory and run this command to rebuild the image before deploying it:
 
 Bash
-docker build -t your-registry-username/application:v3 .
+sudo docker build --no-cache -t fasilcv/k8sapp:v1.0.1 .
 
 
 
