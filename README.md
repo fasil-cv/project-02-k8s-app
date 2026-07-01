@@ -36,10 +36,19 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: db-init-script
+  namespace: project-02-k8s-app
 data:
   init.sql: |
+    -- 1. Create the database if it doesn't exist
     CREATE DATABASE IF NOT EXISTS `lab-db`;
     USE `lab-db`;
+
+    -- 2. Create the remote user and explicitly grant privileges
+    CREATE USER IF NOT EXISTS 'job'@'%' IDENTIFIED BY 'lab_password_123';
+    GRANT ALL PRIVILEGES ON `lab-db`.* TO 'job'@'%';
+    FLUSH PRIVILEGES;
+
+    -- 3. Create the target log table
     CREATE TABLE IF NOT EXISTS lab_table (
         id INT AUTO_INCREMENT PRIMARY KEY,
         worker_node VARCHAR(100) NOT NULL,
