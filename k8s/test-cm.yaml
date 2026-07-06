@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  MYSQL_HOST: mysql-service
+  MYSQL_DATABASE: lab-db
+  MYSQL_USER: job
+  MYSQL_PASSWORD: password123
+  MYSQL_ROOT_PASSWORD: root
+kind: ConfigMap
+metadata:
+  name: test-cm
+  namespace: project-02-k8s-app

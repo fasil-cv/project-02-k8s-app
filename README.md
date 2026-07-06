@@ -29,6 +29,16 @@ DATABASE_USER : 'job';
 DATABASE_PASSWORD 'lab_password_123';
 ```
 
+# Resource name
+```
+App Deploy  : registry
+DB Deploy   : db-registry
+App Service : svc-registry
+DB Service  : svc-db (mysql-service)
+Secret      : db-secret
+ConfigMap   : db-config
+```
+
 
 # Database init config
 ```YAML

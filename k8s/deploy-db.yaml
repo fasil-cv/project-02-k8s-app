@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: db-registry
+  name: db-registry
+  namespace: project-02-k8s-app
+spec:
+  serviceName: "mysql-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-registry
+  template:
+    metadata:
+      labels:
+        app: db-registry
+    spec:
+      containers:
+      - image: mysql:8.0
+        name: mysql
+        env:
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_PASSWORD
+              name: test-cm
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_ROOT_PASSWORD
+              name: test-cm
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_USER
+              name: test-cm
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_DATABASE
+              name: test-cm
+        - name: MYSQL_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: MYSQL_HOST
+              name: test-cm
+        ports:
+        - containerPort: 3306
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db-registry
+  name: mysql-service
+  namespace: project-02-k8s-app
+spec:
+  clusterIP: None
+  ports:
+  - port: 3306
+  selector:
+    app: db-registry
