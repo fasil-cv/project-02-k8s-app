@@ -36,30 +36,43 @@ spec:
         env:
         - name: MYSQL_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              key: MYSQL_PASSWORD
-              name: test-cm
+            secretKeyRef:
+              key: DATABASE_PASSWORD
+              name: db-secret
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              key: MYSQL_ROOT_PASSWORD
-              name: test-cm
+            secretKeyRef:
+              key: DATABASE_ROOT_PASSWORD
+              name: db-secret
         - name: MYSQL_USER
           valueFrom:
             configMapKeyRef:
-              key: MYSQL_USER
-              name: test-cm
+              key: DATABASE_USER
+              name: db-config
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
-              key: MYSQL_DATABASE
-              name: test-cm
-        - name: MYSQL_HOST
-          valueFrom:
-            configMapKeyRef:
-              key: MYSQL_HOST
-              name: test-cm
+              key: DATABASE_NAME
+              name: db-config
         ports:
         - containerPort: 3306
         resources: {}
+        volumeMounts:
+        - name: mysql-db-data
+          mountPath: /var/lib/mysql
+        - name: init-script-volume
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script-volume
+          configMap:
+            name: db-init-script
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-db-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: nfs-share
+      resources:
+        requests:
+          storage: 10Mi
 status: {}
