@@ -76,3 +76,7 @@ data:
 * **Frontend/App:** PHP (PDO), Tailwind CSS, Nginx, Supervisor
 * **Database:** MySQL 8.0 with automated ConfigMap SQL initialization
 * **Storage:** Decoupled data persistence via PersistentVolumeClaims (PVC)
+
+# StatefulSet Storage & Pod Architecture
+<img width="447" height="223" alt="image" src="https://github.com/user-attachments/assets/ebac0ed3-b28e-474d-8782-c20307bc4175" />
+
