@@ -81,3 +81,10 @@ data:
 # StatefulSet Storage & Pod Architecture
 <img width="447" height="223" alt="image" src="https://github.com/user-attachments/assets/ebac0ed3-b28e-474d-8782-c20307bc4175" />
 
+
+# DNS lookup test StatefullSet 
+```
+kubectl -n project-02-k8s-app run test-dns --image=busybox:1.28 --rm -it --restart=Never -- nslookup db-registry-0.mysql-service
+kubectl -n project-02-k8s-app run test-dns --image=busybox:1.28 --rm -it --restart=Never -- nslookup db-registry-0.mysql-service.project-02-k8s-app.svc.cluster.local <<--FQDN
+```
+
