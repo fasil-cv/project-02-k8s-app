@@ -34,9 +34,10 @@ DATABASE_PASSWORD 'lab_password_123';
 App Deploy  : registry
 DB Deploy   : db-registry
 App Service : svc-registry
-DB Service  : svc-db (mysql-service)
+DB Service  : mysql-service
 Secret      : db-secret
 ConfigMap   : db-config
+DB-Host     : db-registry-01.mysql-service
 ```
 
 
