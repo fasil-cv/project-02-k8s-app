@@ -1,3 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: db-registry
+  name: mysql-service
+  namespace: project-02-k8s-app
+spec:
+  clusterIP: None
+  ports:
+  - port: 3306
+  selector:
+    app: db-registry
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -7,7 +21,7 @@ metadata:
   namespace: project-02-k8s-app
 spec:
   serviceName: "mysql-service"
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: db-registry
@@ -49,17 +63,3 @@ spec:
         - containerPort: 3306
         resources: {}
 status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: db-registry
-  name: mysql-service
-  namespace: project-02-k8s-app
-spec:
-  clusterIP: None
-  ports:
-  - port: 3306
-  selector:
-    app: db-registry

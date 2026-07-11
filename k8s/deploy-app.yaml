@@ -21,7 +21,7 @@ spec:
         name: devapp
         env:
         - name: DATABASE_HOST
-          value: "mysql-service"
+          value: "db-registry-0.mysql-service"
         - name: DATABASE_NAME
           value: "lab-db"
         - name: DATABASE_USER
