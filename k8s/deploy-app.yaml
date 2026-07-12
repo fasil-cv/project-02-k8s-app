@@ -19,15 +19,11 @@ spec:
       containers:
       - image: fasilcv/devapp:v1.0.0
         name: devapp
-        env:
-        - name: DATABASE_HOST
-          value: "db-registry-0.mysql-service"
-        - name: DATABASE_NAME
-          value: "lab-db"
-        - name: DATABASE_USER
-          value: "job"
-        - name: DATABASE_PASSWORD
-          value: "password123"
+        envFrom:
+        - configMapRef:
+            name: db-config
+        - secretRef:
+            name: db-secret
         ports:
         - containerPort: 80
         resources: {}
@@ -39,7 +35,7 @@ kind: Service
 metadata:
   labels:
     app: registry
-  name: svc-registry
+  name: registry-svc
   namespace: project-02-k8s-app
 spec:
   ports:
