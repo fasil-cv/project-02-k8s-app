@@ -81,8 +81,12 @@ data:
 # StatefulSet Storage & Pod Architecture
 <img width="447" height="223" alt="image" src="https://github.com/user-attachments/assets/ebac0ed3-b28e-474d-8782-c20307bc4175" />
 
+
+## headless service
 <img width="1275" height="677" alt="Screenshot From 2026-07-11 17-44-52" src="https://github.com/user-attachments/assets/4e142557-ecf4-4d4d-b51c-3aafbc3976b7" />
 
+## report from read
+<img width="1273" height="707" alt="image" src="https://github.com/user-attachments/assets/ac6ed87e-8ebc-46bb-b53e-da58d10e3dc0" />
 
 
 # DNS lookup test StatefullSet 
