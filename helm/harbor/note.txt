@@ -1,0 +1,5 @@
+temp note:
+
+helm install fcvregi harbor/harbor --namespace=harbor --create-namespace -f harbor-value.yaml
+
+helm upgrade fcvregi harbor/harbor --namespace=harbor -f harbor-value.yaml
