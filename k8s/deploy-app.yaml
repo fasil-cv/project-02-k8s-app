@@ -26,7 +26,16 @@ spec:
             name: db-secret
         ports:
         - containerPort: 80
-        resources: {}
+        securityContext:
+          runAsUser: 100
+        readinessProbe:
+          exec:
+            command:
+            - sh 
+            - -c
+            - nc -z db-registry-0.mysql-service 3306
+          initialDelaySeconds: 5
+          periodSeconds: 5
 status: {}
 
 ---
