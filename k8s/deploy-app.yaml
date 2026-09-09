@@ -16,9 +16,15 @@ spec:
       labels:
         app: registry
     spec:
+      volumes:
+        - name: logs
+          emptyDir: {}
       containers:
       - image: fasilcv/devapp:v1.0.0
         name: devapp
+        volumeMounts:
+          - name: logs
+            mountPath: /var/log/nginx
         envFrom:
         - configMapRef:
             name: db-config
@@ -34,8 +40,20 @@ spec:
             - sh 
             - -c
             - nc -z db-registry-0.mysql-service 3306
-          initialDelaySeconds: 5
-          periodSeconds: 5
+          initialDelaySeconds: 2
+          periodSeconds: 2
+      - name: reglog-access
+        image: alpine:latest
+        command: ['sh', '-c', 'tail -F /mnt/logs/access.log']
+        volumeMounts:
+          - name: logs
+            mountPath: /mnt/logs
+      - name: reglog-error
+        image: alpine:latest
+        command: ['sh', '-c', 'tail -F /mnt/logs/error.log']
+        volumeMounts:
+          - name: logs
+            mountPath: /mnt/logs
 status: {}
 
 ---
