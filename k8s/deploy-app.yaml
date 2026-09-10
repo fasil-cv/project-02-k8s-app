@@ -20,11 +20,11 @@ spec:
         - name: logs
           emptyDir: {}
       containers:
-      - image: fasilcv/devapp:v1.0.0
+      - image: fasilcv/devapp:v1.2.7
         name: devapp
         volumeMounts:
           - name: logs
-            mountPath: /var/log/nginx
+            mountPath: /var/log/apache2
         envFrom:
         - configMapRef:
             name: db-config
@@ -33,7 +33,7 @@ spec:
         ports:
         - containerPort: 80
         securityContext:
-          runAsUser: 100
+          runAsGroup: 33
         readinessProbe:
           exec:
             command:
