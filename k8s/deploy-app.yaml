@@ -20,7 +20,7 @@ spec:
         - name: logs
           emptyDir: {}
       containers:
-      - image: fasilcv/devapp:v1.2.7
+      - image: fasilcv/devapp:v1.2.11
         name: devapp
         volumeMounts:
           - name: logs
@@ -33,7 +33,7 @@ spec:
         ports:
         - containerPort: 80
         securityContext:
-          runAsGroup: 33
+          runAsUser: 33
         readinessProbe:
           exec:
             command:

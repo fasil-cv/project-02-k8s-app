@@ -1,0 +1,14 @@
+# pvc - db-backup
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-db-backup
+  namespace: project-02-k8s-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: nfs-share
