@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-backup
+  namespace: project-02-k8s-app
+spec:
+  jobTemplate:
+    metadata:
+      name: db-backup
+    spec:
+      template:
+        metadata: {}
+        spec:
+          containers:
+          - name: db-backup
+            image: mysql:8.0
+            env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: DATABASE_ROOT_PASSWORD
+                  name: db-secret
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  key: DATABASE_NAME
+                  name: db-config
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DATABASE_HOST
+                  name: db-config
+            command:
+              - /bin/sh
+              - -c 
+              - |
+                DATE=$(date +%Y-%m-%d-%H-%M)
+                
+                #Backup mysql
+                mysqldump \
+                  -h "$MYSQL_HOST" \
+                  -u root \
+                  -p"$MYSQL_ROOT_PASSWORD" \
+                  "$MYSQL_DATABASE" \
+                  > /backup/mysql-backup-$DATE.sql
+                #Backup success message
+                echo "Backup has been completed: $(ls /backup/mysql-backup-$DATE.sql)"
+                #Backup tail
+                echo "========= backup tail =============="
+                tail /backup/mysql-backup-$DATE.sql
+                echo "========= backup tail =============="
+            resources: {}
+            volumeMounts:
+            - mountPath: "/backup"
+              name: backup
+          restartPolicy: OnFailure
+          volumes:
+            - name: backup
+              persistentVolumeClaim:
+                claimName: pvc-db-backup
+  schedule: 30 10 1 * *
+  successfulJobsHistoryLimit: 5
+  failedJobsHistoryLimit: 5
+status: {}
