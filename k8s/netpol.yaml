@@ -1,4 +1,3 @@
----
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -9,28 +8,9 @@ spec:
   policyTypes:
   - Ingress
 
----
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-web-to-mysql
-  namespace: project-02-k8s-app
-spec:
-  podSelector:
-    matchLabels:
-      app: db-registry
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: registry
-    ports:
-    - protocol: TCP
-      port: 3306
 
 ---
+# Allow trafic from ingress to application 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -39,7 +19,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      app: registry
+      role: web
   policyTypes:
     - Ingress
   ingress:
@@ -53,3 +33,27 @@ spec:
       ports:
         - protocol: TCP
           port: 80
+---
+# Allow for web to db of readiness probe
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-web-to-mysql
+  namespace: project-02-k8s-app
+spec:
+  podSelector:
+    matchLabels:
+      role: database
+  policyTypes:
+  - Ingress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: project-02-k8s-app
+      podSelector:
+        matchLabels:
+          role: web
+    ports:
+    - protocol: TCP
+      port: 3306

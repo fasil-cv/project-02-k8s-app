@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   labels:
     app: registry
+    role: web
+    tier: frontend
   name: registry
   namespace: project-02-k8s-app
 spec:
@@ -15,6 +17,8 @@ spec:
     metadata:
       labels:
         app: registry
+        role: web
+        tier: frontend
     spec:
       volumes:
         - name: logs
@@ -62,6 +66,8 @@ kind: Service
 metadata:
   labels:
     app: registry
+    role: web
+    tier: frontend
   name: registry-svc
   namespace: project-02-k8s-app
 spec:

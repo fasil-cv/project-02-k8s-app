@@ -2,7 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: db-registry
+    app: registry
+    role: database
+    tier: backend
   name: mysql-service
   namespace: project-02-k8s-app
 spec:
@@ -10,13 +12,17 @@ spec:
   ports:
   - port: 3306
   selector:
-    app: db-registry
+    app: registry
+    role: database
+    tier: backend
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   labels:
-    app: db-registry
+    app: registry
+    role: database
+    tier: backend
   name: db-registry
   namespace: project-02-k8s-app
 spec:
@@ -24,11 +30,15 @@ spec:
   replicas: 2
   selector:
     matchLabels:
-      app: db-registry
+      app: registry
+      role: database
+      tier: backend
   template:
     metadata:
       labels:
-        app: db-registry
+        app: registry
+        role: database
+        tier: backend
     spec:
       containers:
       - image: mysql:8.0
@@ -56,6 +66,8 @@ spec:
               name: db-config
         ports:
         - containerPort: 3306
+        securityContext:
+          runAsUser: 999
         resources: {}
         volumeMounts:
         - name: mysql-db-data
